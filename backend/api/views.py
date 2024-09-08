@@ -1,8 +1,15 @@
 from rest_framework import viewsets
 from rest_framework.response import Response
-from rest_framework.decorators import action
+from django_filters.rest_framework import DjangoFilterBackend, FilterSet, CharFilter
 from .models import ITTeam, RequestService, UserRequest
 from .serializer import ITTeamSerializer, RequestServiceSerializer, UserRequestSerializer
+
+class UserRequestFilter(FilterSet):
+    q = CharFilter(field_name='name', lookup_expr='icontains')
+
+    class Meta:
+        model = UserRequest
+        fields = ['q']
 
 class ITTeamViewSet(viewsets.ModelViewSet):
     queryset = ITTeam.objects.all()
@@ -15,13 +22,15 @@ class RequestServiceViewSet(viewsets.ModelViewSet):
 class UserRequestViewSet(viewsets.ModelViewSet):
     queryset = UserRequest.objects.all()
     serializer_class = UserRequestSerializer
+    filter_backends = (DjangoFilterBackend,)
+    filterset_class = UserRequestFilter
 
-    @action(detail=True, methods=['get'])
-    def custom_action(self, request, pk=None):
-        """
-        A custom action example for UserRequest.
-        This is optional and can be used for custom behavior.
-        """
-        user_request = self.get_object()
-        serializer = self.get_serializer(user_request)
+    # Custom action is optional if you rely on the filter_backends
+    @action(detail=False, methods=['get'])
+    def search(self, request):
+        queryset = self.get_queryset()
+        filterset = self.filterset_class(request.GET, queryset=queryset)
+        if filterset.is_valid():
+            queryset = filterset.qs
+        serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
