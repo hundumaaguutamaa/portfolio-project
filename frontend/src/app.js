@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Container, InputGroup, FormControl, Row, Col, Navbar, Nav } from 'react-bootstrap';
 import './main.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   const [search, setSearch] = useState('');
@@ -15,12 +16,15 @@ function App() {
   return (
     <div>
       <Navbar bg="dark" variant="dark" expand="lg">
-        <Navbar.Brand href="#home">Dispatch Route</Navbar.Brand>
-        <Nav className="mr-auto">
-          <Nav.Link href="#home">Home</Nav.Link>
-          <Nav.Link href="#features">Features</Nav.Link>
-        </Nav>
-      </Navbar>
+  <Navbar.Brand href="#home">Dispatch Route</Navbar.Brand>
+  <Navbar.Collapse className="justify-content-center"> {/* Center the nav links */}
+    <Nav>
+      <Nav.Link href="#home">Home</Nav.Link>
+      <Nav.Link href="#features">Features</Nav.Link>
+    </Nav>
+  </Navbar.Collapse>
+</Navbar>
+
 
       <Container fluid className="my-4">
         <h1>Search and Dispatch</h1>
@@ -32,9 +36,7 @@ function App() {
             value={search}
             onChange={handleSearchChange}
           />
-          <InputGroup.Append>
-            <Button variant="primary">Search</Button>
-          </InputGroup.Append>
+          <Button variant="primary">Search</Button>
         </InputGroup>
 
         {suggestion && <p className="search-suggestion">{suggestion}</p>}
@@ -63,7 +65,7 @@ function App() {
           </Col>
         </Row>
 
-        <footer className="py-5 my-5 bg-dark text-white text-center">
+        <footer className="py-3 my-3 bg-dark bottom-0 text-white text-center">
           <div className="container">
             <p>Copyright @ Dispatch Route 2024</p>
           </div>

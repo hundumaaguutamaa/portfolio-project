@@ -1,42 +1,43 @@
-.container {
-    max-width: 100%; /* Allow container to use full width */
-    padding: 20px;
-  }
-  
-  .search-bar {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 20px;
-  }
-  
-  .search-suggestion {
-    font-style: italic;
-    color: #888;
-  }
-  
-  .button {
-    background-color: #007bff;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .locations {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem; /* Optional: space between images */
-  }
-  
-  .location-image {
-    width: 100%;
-    border-radius: 5px;
-    max-width: 100%; /* Ensure images do not exceed container width */
-  }
-  
-  footer {
-    background-color: #343a40; /* Dark background */
-    color: white; /* White text color */
-  }
-  
+.search-container {
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  margin-bottom: 20px;
+}
+
+.search-bar {
+  width: 100%;
+  max-width: 500px; /* Adjust this value as needed */
+  padding: 10px;
+}
+
+.button {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.locations {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem; /* Optional: space between images */
+}
+
+.location-image {
+  width: 100%;
+  border-radius: 5px;
+  max-width: 100%; /* Ensure images do not exceed container width */
+}
+
+/* Footer styles */
+footer {
+  background-color: #343a40; /* Dark background */
+  color: white; /* White text color */
+  width: 100%; /* Full width */
+  padding: 20px; /* Space inside */
+  text-align: center; /* Centered text */
+  font-size: 16px; /* Text size */
+  border-top: 1px solid #444; /* Top border */
+}
