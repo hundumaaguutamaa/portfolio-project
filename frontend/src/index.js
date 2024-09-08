@@ -1,5 +1,12 @@
-import React from "react";
-import ReactDom from "react-dom";
-import App from './app';
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './app'; // Import the App component
+import './main.css'; // Import your CSS
 
-ReactDom.render(<App />, document.getElementById("root")  )
+// This uses React 18’s `createRoot` API
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);

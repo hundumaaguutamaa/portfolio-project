@@ -1,0 +1,36 @@
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .search-bar {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .search-suggestion {
+    font-style: italic;
+    color: #888;
+  }
+  
+  .button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .locations {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .location-image {
+    width: 30%;
+    border-radius: 5px;
+  }
+  
