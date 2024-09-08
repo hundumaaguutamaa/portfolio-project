@@ -1,5 +1,6 @@
 from rest_framework import viewsets
 from rest_framework.response import Response
+from rest_framework.decorators import action  # Add this line
 from django_filters.rest_framework import DjangoFilterBackend, FilterSet, CharFilter
 from .models import ITTeam, RequestService, UserRequest
 from .serializer import ITTeamSerializer, RequestServiceSerializer, UserRequestSerializer
@@ -25,7 +26,7 @@ class UserRequestViewSet(viewsets.ModelViewSet):
     filter_backends = (DjangoFilterBackend,)
     filterset_class = UserRequestFilter
 
-    # Custom action is optional if you rely on the filter_backends
+    # Custom action for search functionality
     @action(detail=False, methods=['get'])
     def search(self, request):
         queryset = self.get_queryset()

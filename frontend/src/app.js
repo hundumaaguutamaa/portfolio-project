@@ -17,7 +17,7 @@ function App() {
 
   // Handle search button click
   const handleSearchClick = () => {
-    axios.get(`/api/search/?q=${search}`)
+    axios.get(`/api/userrequests/search/?q=${search}`) // Updated to use the search endpoint
       .then(response => {
         setResults(response.data);
       })
