@@ -1,6 +1,5 @@
 .container {
-    max-width: 1200px;
-    margin: 0 auto;
+    max-width: 100%; /* Allow container to use full width */
     padding: 20px;
   }
   
@@ -26,11 +25,18 @@
   
   .locations {
     display: flex;
-    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem; /* Optional: space between images */
   }
   
   .location-image {
-    width: 30%;
+    width: 100%;
     border-radius: 5px;
+    max-width: 100%; /* Ensure images do not exceed container width */
+  }
+  
+  footer {
+    background-color: #343a40; /* Dark background */
+    color: white; /* White text color */
   }
   
