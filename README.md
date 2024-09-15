@@ -2,6 +2,8 @@
     Title: Dispatch Route
 
 	Tools:
+Backend:
+- pip install django-filter // for search functionality
 
 For frontend:
 - Vue-3 is the framework you use to build your application.
