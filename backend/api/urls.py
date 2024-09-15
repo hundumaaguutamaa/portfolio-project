@@ -11,4 +11,3 @@ router.register(r'userrequests', UserRequestViewSet)
 urlpatterns = [
     path('api/', include(router.urls)),  # base path for your API is set
 ]
-
