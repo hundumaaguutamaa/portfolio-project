@@ -1,0 +1,63 @@
+/* Global Styles */
+html, body {
+    height: 100%; /* Ensure the body stretches to full height */
+    margin: 0; /* Reset default margin */
+    padding: 0; /* Reset default padding */
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .container {
+    flex: 1; /* Take up the remaining space between navbar and footer */
+    padding: 20px; /* Add padding for content inside the container */
+  }
+  
+  .section {
+    margin-bottom: 20px;
+  }
+  
+  .title {
+    font-weight: bold;
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  /* Navbar Styles */
+  .navbar {
+    width: 100%;
+    margin-bottom: 0;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  
+  /* Optional: Add hover effects to navbar items for better user experience */
+  .navbar-nav .nav-link:hover {
+    color: #28a745; /* Example hover color */
+  }
+  
+  /* Carousel Styles */
+  .carousel-item img {
+    height: 480px;
+    object-fit: cover;
+    width: 100%; /* Ensure it spans full width */
+  }
+  
+  /* Responsive adjustment for smaller screens */
+  @media (max-width: 768px) {
+    .carousel-item img {
+      height: auto; /* Allow image to adjust on smaller screens */
+    }
+  }
+  
+  /* Footer Styles */
+  footer {
+    width: 100%;
+    background-color: #f8f9fa;
+    padding: 20px;
+    margin-top: auto; /* Push footer to the bottom */
+    border-top: 1px solid #ddd;
+    text-align: center; /* Ensure footer content is centered */
+  }
+  
