@@ -25,7 +25,7 @@ class UserRequest(models.Model):
     service = models.ForeignKey(RequestService, on_delete=models.CASCADE)
     request_description = models.TextField()
     team = models.ForeignKey(ITTeam, on_delete=models.CASCADE)
-    request_status = models.CharField(max_length=100)
+    #request_status = models.CharField(max_length=100)
 
     def __str__(self):
         return f'Request {self.request_id}: {self.request_status}'

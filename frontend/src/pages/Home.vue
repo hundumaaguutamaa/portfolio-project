@@ -26,85 +26,67 @@
       </div>
     </nav>
 
+    <!-- Search Section -->
     <div class="section">
       <form class="d-flex" @submit.prevent="handleSearch">
         <input
           class="form-control me-2"
           type="search"
-          placeholder="Search Teams"
+          placeholder="Search Requests"
           aria-label="Search"
-          v-model="searchQuery" />
+          v-model="searchQuery"
+        />
         <button class="btn btn-outline-success" type="submit">Search</button>
       </form>
-      
+
       <!-- Display the search query -->
       <div class="mt-2">
-        <p>You are searching for: <strong>{{ searchQuery }}</strong></p>
+        <p v-if="lastSearchQuery">You searched for: <strong>{{ lastSearchQuery }}</strong></p>
+      </div>
+
+      <!-- Error Message -->
+      <div v-if="errorMessage" class="alert alert-danger mt-3">
+        {{ errorMessage }}
+      </div>
+
+      <!-- Display search results -->
+      <div class="mt-3">
+        <h4 v-if="results.length > 0">Search Results:</h4>
+        <ul v-if="results.length > 0">
+          <li v-for="item in results" :key="item.request_id" class="mb-3">
+            <strong>Request Description:</strong> {{ item.request_description }} <br />
+            <strong>Service:</strong> {{ item.service.service_name }} <br />
+            <strong>Team:</strong> {{ item.team.team_name }} (Expertise: {{ item.team.expertise_areas }}) <br />
+            <strong>Status:</strong> {{ item.request_status }}
+          </li>
+        </ul>
+        <p v-else-if="lastSearchQuery">No results found for "{{ lastSearchQuery }}"</p>
       </div>
     </div>
 
     <!-- Carousel Section -->
     <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
       <div class="carousel-indicators">
-        <button
-          type="button"
-          data-bs-target="#carouselExampleIndicators"
-          data-bs-slide-to="0"
-          class="active"
-          aria-current="true"
-          aria-label="Slide 1"
-        ></button>
-        <button
-          type="button"
-          data-bs-target="#carouselExampleIndicators"
-          data-bs-slide-to="1"
-          aria-label="Slide 2"
-        ></button>
-        <button
-          type="button"
-          data-bs-target="#carouselExampleIndicators"
-          data-bs-slide-to="2"
-          aria-label="Slide 3"
-        ></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
       </div>
       <div class="carousel-inner">
         <div class="carousel-item active">
-          <img
-            src="https://picsum.photos/1024/480/?image=52"
-            class="d-block w-100"
-            alt="First slide"
-          />
+          <img src="https://picsum.photos/1024/480/?image=52" class="d-block w-100" alt="First slide" />
         </div>
         <div class="carousel-item">
-          <img
-            src="https://picsum.photos/1024/480/?image=54"
-            class="d-block w-100"
-            alt="Second slide"
-          />
+          <img src="https://picsum.photos/1024/480/?image=54" class="d-block w-100" alt="Second slide" />
         </div>
         <div class="carousel-item">
-          <img
-            src="https://picsum.photos/1024/480/?image=58"
-            class="d-block w-100"
-            alt="Third slide"
-          />
+          <img src="https://picsum.photos/1024/480/?image=58" class="d-block w-100" alt="Third slide" />
         </div>
       </div>
-      <button
-        class="carousel-control-prev"
-        type="button"
-        data-bs-target="#carouselExampleIndicators"
-        data-bs-slide="prev"
-      >
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Previous</span>
       </button>
-      <button
-        class="carousel-control-next"
-        type="button"
-        data-bs-target="#carouselExampleIndicators"
-        data-bs-slide="next"
-      >
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Next</span>
       </button>
@@ -118,37 +100,42 @@
 </template>
 
 <script>
-import { ref, nextTick } from 'vue';
-import { useRouter } from 'vue-router';
+import { ref } from 'vue';
 
 export default {
   name: 'Home',
   setup() {
-    const router = useRouter();
     const searchQuery = ref('');
+    const lastSearchQuery = ref('');
+    const results = ref([]);
+    const errorMessage = ref('');
 
-    // Updated handleSearch function with route refresh
     const handleSearch = async () => {
       if (searchQuery.value) {
-        const queryParam = searchQuery.value;
+        lastSearchQuery.value = searchQuery.value;
 
-        // If navigating to the same route, force a refresh by using router.replace
-        if (router.currentRoute.value.name === 'BrowseSaunas') {
-          router.replace({ name: 'BrowseSaunas', query: { query: queryParam } });
-        } else {
-          router.push({ name: 'BrowseSaunas', query: { query: queryParam } });
+        try {
+          const response = await fetch(
+            `http://127.0.0.1:8000/userrequests/search/?q=${encodeURIComponent(lastSearchQuery.value)}`
+          );
+          if (!response.ok) throw new Error('Network response was not ok');
+          const data = await response.json();
+          results.value = data;
+          errorMessage.value = ''; // Clear any previous error message
+        } catch (error) {
+          console.error('Error fetching search results:', error);
+          errorMessage.value = 'Error fetching search results. Please try again.';
         }
 
-        // Clear the search input after the search
         searchQuery.value = '';
-
-        // Wait for the DOM to update
-        await nextTick();
       }
     };
 
     return {
       searchQuery,
+      lastSearchQuery,
+      results,
+      errorMessage,
       handleSearch,
     };
   },
