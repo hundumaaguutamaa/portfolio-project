@@ -4,7 +4,7 @@ html, body {
     margin: 0; /* Reset default margin */
     padding: 0; /* Reset default padding */
     font-family: Arial, sans-serif;
-    background-color: #f8f9fa;
+    background-color: #a5c2de;
     display: flex;
     flex-direction: column;
   }
@@ -28,8 +28,8 @@ html, body {
   .navbar {
     width: 100%;
     margin-bottom: 0;
-    padding-left: 0;
-    padding-right: 0;
+    padding-left: 5;
+    padding-right: 5;
   }
   
   /* Optional: Add hover effects to navbar items for better user experience */
