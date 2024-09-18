@@ -1,17 +1,15 @@
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from api.views import ITTeamViewSet, RequestServiceViewSet, UserRequestViewSet
+from api import views  # Update with your app's views
 
-# Create a router and register our viewsets with it.
 router = DefaultRouter()
-router.register(r'itteams', ITTeamViewSet)
-router.register(r'requestservices', RequestServiceViewSet)
-router.register(r'userrequests', UserRequestViewSet)
+router.register(r'teams', views.ITTeamViewSet)
+router.register(r'services', views.RequestServiceViewSet)
+router.register(r'userrequests', views.UserRequestViewSet)
 
-# The API URLs are now determined automatically by the router.
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include(router.urls)),
-    
+    path('api/', include(router.urls)),  # Add your API routes
+    path('', include(router.urls)),  # Redirect root to API
 ]
