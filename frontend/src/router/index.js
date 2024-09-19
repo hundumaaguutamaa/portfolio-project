@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Home from '../views/Home.vue';  // Make sure this component exists and is correctly imported
 import About from '../views/About.vue';
+import Footer from '../views/Footer.vue';
 
 const routes = [
   {
