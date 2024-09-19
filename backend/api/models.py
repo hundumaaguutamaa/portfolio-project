@@ -1,15 +1,12 @@
 from django.db import models
 
 class ExpertiseArea(models.Model):
-    name = models.CharField(max_length=255, unique=True)
-
-    def __str__(self):
-        return self.name
+    name = models.CharField(max_length=255)
 
 class ITTeam(models.Model):
     team_id = models.AutoField(primary_key=True)
     team_name = models.CharField(max_length=255)
-    expertise_areas = models.ManyToManyField(ExpertiseArea, related_name='teams')
+    expertise_areas = models.ManyToManyField(ExpertiseArea)
 
     def __str__(self):
         return self.team_name

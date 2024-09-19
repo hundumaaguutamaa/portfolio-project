@@ -39,7 +39,7 @@
       async handleSearch() {
         if (this.searchQuery) {
           try {
-            const response = await fetch(`/api/search/?q=${this.searchQuery}`);
+            const response = await fetch(`/http://127.0.0.1:8000/teamsq=${this.searchQuery}`);
             const data = await response.json();
             this.searchResults = data.results;
           } catch (error) {

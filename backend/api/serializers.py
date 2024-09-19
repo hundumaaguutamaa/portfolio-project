@@ -1,21 +1,43 @@
 from rest_framework import serializers
 from .models import ITTeam, ExpertiseArea, RequestService, UserRequest
 
-# ExpertiseArea serializer
 class ExpertiseAreaSerializer(serializers.ModelSerializer):
     class Meta:
         model = ExpertiseArea
         fields = ['id', 'name']
 
-# ITTeam serializer
 class ITTeamSerializer(serializers.ModelSerializer):
-    # Using ExpertiseAreaSerializer to handle many-to-many relationship
-    expertise_areas = ExpertiseAreaSerializer(many=True, read_only=False)
-    expertise_areas_ids = serializers.PrimaryKeyRelatedField(queryset=ExpertiseArea.objects.all(), many=True, write_only=True)
+    expertise_areas = ExpertiseAreaSerializer(many=True)  # Nested serializer
 
     class Meta:
         model = ITTeam
-        fields = ['team_id', 'team_name', 'expertise_areas', 'expertise_areas_ids']
+        fields = ['team_id', 'team_name', 'expertise_areas']
+
+    def create(self, validated_data):
+        expertise_areas_data = validated_data.pop('expertise_areas', [])
+        team = ITTeam.objects.create(**validated_data)
+        
+        # Adding ManyToMany relationships
+        for expertise_data in expertise_areas_data:
+            expertise_area = ExpertiseArea.objects.get(id=expertise_data['id'])
+            team.expertise_areas.add(expertise_area)
+        
+        return team
+
+    def update(self, instance, validated_data):
+        expertise_areas_data = validated_data.pop('expertise_areas', [])
+        
+        # Update basic fields
+        instance.team_name = validated_data.get('team_name', instance.team_name)
+        instance.save()
+
+        # Update ManyToMany relationships
+        instance.expertise_areas.clear()  # Clear the current expertise areas
+        for expertise_data in expertise_areas_data:
+            expertise_area = ExpertiseArea.objects.get(id=expertise_data['id'])
+            instance.expertise_areas.add(expertise_area)
+        
+        return instance
 
 # RequestService serializer
 class RequestServiceSerializer(serializers.ModelSerializer):
