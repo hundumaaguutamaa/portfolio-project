@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import Home from '../views/Home.vue';  // Make sure this component exists and is correctly imported
 import About from '../views/About.vue';
 import Footer from '../views/Footer.vue';
+import SearchRequest from '../views/SearchRequest.vue';
 
 const routes = [
   {
@@ -16,6 +17,11 @@ const routes = [
     component: About
   },
 
+  {
+    path: '/Search',
+    name: 'SearchRequest',
+    component: SearchRequest,
+  },
 ];
 
 // Create and configure the router

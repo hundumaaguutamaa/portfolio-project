@@ -1,76 +1,116 @@
 <template>
-    <div>
-      <form @submit.prevent="handleSearch" class="d-flex ms-auto">
-        <input 
-          v-model="searchQuery" 
-          class="form-control me-2 rounded-pill small-search-input" 
-          type="search" 
-          placeholder="Search..." 
-          aria-label="Search"
-        >
-        <button class="btn btn-outline-primary rounded-pill" type="submit">Search</button>
-      </form>
-      
-      <!-- Display search results -->
-      <div v-if="searchResults.length">
-        <ul>
-          <li v-for="(result, index) in searchResults" :key="index">
-            {{ result.service_name }}
-          </li>
-        </ul>
-      </div>
-  
-      <div v-else-if="searchExecuted">
-        <p>No results found</p>
-      </div>
+  <div class="search-container">
+    <h1>Search for IT Teams</h1>
+
+    <!-- Search Inputs -->
+    <div class="search-inputs">
+      <input
+        v-model="searchTerm"
+        type="text"
+        placeholder="Search by team name"
+        class="input-field"
+      />
+      <input
+        v-model="expertiseAreaTerm"
+        type="text"
+        placeholder="Search by expertise area"
+        class="input-field"
+      />
     </div>
-  </template>
-  
-  <script>
-  export default {
-    data() {
-      return {
-        searchQuery: '',  // To store the search input
-        searchResults: [],  // To store the results from the API
-        searchExecuted: false,  // To track if the search was executed
-      };
-    },
-    methods: {
-      async handleSearch() {
-        if (this.searchQuery) {
-          try {
-            const response = await fetch(`/http://127.0.0.1:8000/teamsq=${this.searchQuery}`);
-            const data = await response.json();
-            this.searchResults = data.results;
-          } catch (error) {
+
+    <!-- Search Button -->
+    <SearchButton @search="handleSearch" />
+
+    <!-- Placeholder for Results -->
+    <div class="results-container" v-if="teams.length">
+      <h2>Search Results:</h2>
+      <ul>
+        <li v-for="team in teams" :key="team.team_id">
+          <h3>{{ team.team_name }}</h3>
+          <ul>
+            <li v-for="area in team.expertise_areas" :key="area.id">
+              {{ area.name }}
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Placeholder if no results -->
+    <div v-else-if="searchPerformed">
+      <p>No teams found for your search.</p>
+    </div>
+  </div>
+</template>
+
+<script>
+import axios from 'axios';
+import SearchButton from './SearchButton.vue'; // Importing SearchButton component
+
+export default {
+  name: 'SearchRequest',
+  components: {
+    SearchButton,
+  },
+  data() {
+    return {
+      searchTerm: '', // For team name input
+      expertiseAreaTerm: '', // For expertise area input
+      teams: [], // To store search results
+      searchPerformed: false, // To track if a search was made
+    };
+  },
+  methods: {
+    handleSearch() {
+      if (this.searchTerm || this.expertiseAreaTerm) {
+        axios
+          .get(
+            `http://127.0.0.1:8000/api/search/?team_name=${this.searchTerm}&expertise_area=${this.expertiseAreaTerm}`
+          )
+          .then((response) => {
+            this.teams = response.data; // Assuming response is an array of teams
+            this.searchPerformed = true; // Mark that a search was made
+          })
+          .catch((error) => {
             console.error('Error fetching search results:', error);
-          }
-        } else {
-          this.searchResults = [];
-        }
-        this.searchExecuted = true;
-      },
+          });
+      } else {
+        alert('Please enter a search term or expertise area.');
+      }
     },
-  };
-  </script>
-  
-  <style scoped>
-  /* Styling to minimize the search input size and placeholder */
-  .small-search-input {
-    height: 30px;
-    font-size: 14px;
-    padding: 5px 10px;
-    width: 200px; /* You can adjust this width based on your design */
-  }
-  
-  .small-search-input::placeholder {
-    font-size: 12px; /* Smaller font size for the placeholder */
-    color: #aaa;     /* Slightly lighter color for the placeholder */
-  }
-  
-  .btn {
-    padding: 5px 15px;
-    font-size: 14px;
-  }
-  </style>
-  
+  },
+};
+</script>
+
+<style scoped>
+.search-container {
+  padding: 20px;
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.input-field {
+  margin: 10px;
+  padding: 10px;
+  width: 250px;
+  font-size: 1rem;
+}
+
+.results-container {
+  margin-top: 20px;
+}
+
+h2 {
+  margin-bottom: 10px;
+}
+
+li {
+  list-style-type: none;
+  padding: 5px;
+}
+
+ul {
+  padding: 0;
+}
+</style>

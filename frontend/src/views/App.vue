@@ -3,6 +3,7 @@
     <div class="nav">
       <router-link to="/">Home</router-link>
       <router-link to="/About">About</router-link>
+      <router-link to="/Search">Search</router-link>
     </div>
     
     <!-- This renders the current view based on the route -->
