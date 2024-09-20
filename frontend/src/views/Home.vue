@@ -1,129 +1,99 @@
 <template>
   <div>
-    <div class="search-container">
-      <input
-        type="text"
-        v-model="searchQuery"
-        placeholder="Search by team name or expertise area"
-        @input="filterTeams"
-        class="search-input"
-      />
-      <button @click="handleSearch" class="search-button">Search</button>
-    </div>
-    
-    <div v-if="searchQuery" class="current-search">
-      <p>Searching for: "{{ searchQuery }}"</p>
-    </div>
-
-    <div class="team-container">
-      <div v-for="team in filteredTeams" :key="team.team_id" class="team-card">
-        <h2 class="team-name">{{ team.team_name }}</h2>
-        <p class="expertise-area">Expertise Area: {{ team.expertise_area }}</p>
-      </div>
-    </div>
+    <h1>Teams List</h1>
+    <ul>
+      <li v-for="team in teams" :key="team.team_id">
+        <h2>{{ team.team_name }}</h2>
+        <p>Expertise Areas:</p>
+        <ul>
+          <li v-for="area in team.expertise_areas" :key="area.id">{{ area.name }}</li>
+        </ul>
+      </li>
+    </ul>
   </div>
 </template>
 
 <script>
-import axios from "axios"; // Importing axios to make HTTP requests
+import { onMounted, ref } from 'vue'; // Importing necessary functions
+import axios from 'axios';
 
 export default {
-  data() {
-    return {
-      teams: [], // Initially empty, will be filled with backend data
-      searchQuery: "", // Stores the search input
-      filteredTeams: [], // Stores the filtered results
-    };
-  },
-  created() {
-    // Automatically fetch data when the component is created
-    this.fetchTeams();
-  },
-  methods: {
-    fetchTeams() {
-      axios
-        .get("http://127.0.0.1:8000/api/teams/") // Adjust this URL to match your Django API endpoint
-        .then((response) => {
-          this.teams = response.data; // Assign the backend data to the teams array
-          this.filteredTeams = this.teams; // Initialize filtered teams with all teams
+  name: "EmployeeList",
+  setup() {
+    const teams = ref([]); // Create a reactive variable to hold teams
+
+    onMounted(() => {
+      axios.get('http://127.0.0.1:8000/teams/')
+        .then((resp) => {
+          // Assuming the response is an array of team objects
+          teams.value = resp.data; // Assign the response data to the teams variable
+          console.warn(resp.data); // Log the entire response for debugging
         })
         .catch((error) => {
           console.error("Error fetching teams:", error);
         });
-    },
-    handleSearch() {
-      this.filterTeams(); // Call the filter function
-      this.searchQuery = ""; // Clear the search input
-    },
-    filterTeams() {
-      const query = this.searchQuery.toLowerCase(); // Normalize the query
-      this.filteredTeams = this.teams.filter(team => 
-        team.team_name.toLowerCase().includes(query) || 
-        team.expertise_area.toLowerCase().includes(query)
-      );
-    },
-  },
+    });
+
+    return {
+      teams, // Expose the teams variable to the template
+    };
+  }
 };
 </script>
 
 <style scoped>
-.team-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 20px;
-  padding: 20px;
+/* Main container */
+div {
+  max-width: 800px; /* Limit the width for better readability */
+  margin: 0 auto; /* Center the container */
+  padding: 20px; /* Add padding around the content */
+  font-family: Arial, sans-serif; /* Set a clean font */
 }
 
-.search-container {
-  margin-bottom: 30px; /* Increased space between search and teams */
+/* Heading styles */
+h1 {
+  text-align: center; /* Center the main heading */
+  color: #333; /* Darker text for better contrast */
+  margin-bottom: 20px; /* Space below the heading */
 }
 
-.search-input {
-  padding: 10px;
-  font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+/* List styles */
+ul {
+  list-style-type: none; /* Remove default bullet points */
+  padding: 0; /* Remove default padding */
 }
 
-.search-button {
-  padding: 10px 15px;
-  font-size: 1rem;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-left: 10px; /* Space between input and button */
+li {
+  background-color: #f9f9f9; /* Light background for list items */
+  margin: 10px 0; /* Space between list items */
+  border-radius: 5px; /* Rounded corners */
+  padding: 15px; /* Inner padding for items */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  transition: transform 0.2s; /* Animation effect */
 }
 
-.search-button:hover {
-  background-color: #0056b3;
+li:hover {
+  transform: translateY(-2px); /* Lift effect on hover */
 }
 
-.current-search {
-  margin-bottom: 20px; /* Space for the current search text */
-  font-style: italic;
+/* Subheading styles */
+h2 {
+  margin: 0; /* Remove default margin */
+  font-size: 1.5rem; /* Slightly larger font size */
+  color: #007bff; /* Blue color for team names */
 }
 
-.team-card {
-  background-color: #f5f5f5;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  transition: transform 0.3s ease;
+/* Expertise area list */
+p {
+  margin: 5px 0; /* Space around paragraphs */
+  font-weight: bold; /* Make the expertise label bold */
 }
 
-.team-card:hover {
-  transform: scale(1.05);
-}
-
-.team-name {
-  font-size: 1.5rem;
-  color: #333;
-}
-
-.expertise-area {
-  font-size: 1.1rem;
-  color: #777;
+ul > li {
+  background-color: #e9ecef; /* Lighter background for expertise areas */
+  margin-top: 5px; /* Space above expertise area items */
+  padding: 10px; /* Inner padding */
+  border-radius: 3px; /* Slightly rounded corners */
 }
 </style>
+
