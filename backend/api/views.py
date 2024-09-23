@@ -1,4 +1,7 @@
 from django.http import JsonResponse
+from rest_framework.decorators import api_view
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login, logout
 from rest_framework import viewsets
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -60,3 +63,16 @@ class SearchView(APIView):
 
         # Return the results
         return JsonResponse(serializer.data, safe=False)
+    
+    # Signup views
+    @api_view(['POST'])
+    def signup(request):
+        username = request.data['username']
+        password = request.data['password']
+        email = request.data.get('email', '')
+
+        if User.objects.filter(username=username).exists():
+            return Response({'error': 'Username already exists'}, status=status.HTTP_400_BAD_REQUEST)
+
+        user = User.objects.create_user(username=username, password=password, email=email)
+        return Response({'message': 'User created successfully'}, status=status.HTTP_201_CREATED)
