@@ -3,25 +3,15 @@ import Home from '../views/Home.vue';  // Make sure this component exists and is
 import About from '../views/About.vue';
 import Footer from '../views/Footer.vue';
 import SearchRequest from '../views/SearchRequest.vue';
+import Login from '../views/Login.vue';
 
+// Define the routes with meta information for requiring authentication
 const routes = [
-  {
-    path: '/',
-    name: 'Home',
-    component: Home
-  },
-
-  {
-    path: '/about',
-    name: 'About',
-    component: About
-  },
-
-  {
-    path: '/Search',
-    name: 'SearchRequest',
-    component: SearchRequest,
-  },
+  { path: '/', redirect: '/home' },  // Redirect root path to /home
+  { path: '/home', name: 'Home', component: Home, meta: { requiresAuth: true } },
+  { path: '/about', name: 'About', component: About, meta: { requiresAuth: true } },
+  { path: '/Search', name: 'SearchRequest', component: SearchRequest, meta: { requiresAuth: true } },
+  { path: '/Login', name: 'Login', component: Login },
 ];
 
 // Create and configure the router
@@ -30,4 +20,17 @@ const router = createRouter({
   routes,
 });
 
-export default router
+// Add navigation guard to check authentication before each route
+router.beforeEach((to, from, next) => {
+  const isAuthenticated = !!localStorage.getItem('access_token'); // Check if access_token exists in localStorage
+
+  if (to.meta.requiresAuth && !isAuthenticated) {
+    // If the route requires authentication and the user is not authenticated, redirect to Login
+    next({ name: 'Login' });
+  } else {
+    // Otherwise, proceed to the route
+    next();
+  }
+});
+
+export default router;
