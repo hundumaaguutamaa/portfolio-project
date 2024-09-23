@@ -2,9 +2,32 @@
   <div class="login-container">
     <h2>Login</h2>
     <form @submit.prevent="loginUser" class="login-form">
-      <input type="text" v-model="username" placeholder="Username" class="login-input" aria-label="Username" />
-      <input type="password" v-model="password" placeholder="Password" class="login-input" aria-label="Password" />
-      <button type="submit" class="login-button">Login</button>
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input
+          type="text"
+          v-model="username"
+          class="form-control"
+          id="username"
+          placeholder="Enter username"
+          aria-label="Username"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input
+          type="password"
+          v-model="password"
+          class="form-control"
+          id="password"
+          placeholder="Enter password"
+          aria-label="Password"
+        />
+      </div>
+
+      <button type="submit" class="btn btn-primary">Login</button>
+
       <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
     </form>
   </div>
@@ -50,13 +73,14 @@ export default {
 
 <style scoped>
 .login-container {
-  max-width: 400px;
-  margin: 0 auto;
   padding: 20px;
-  background-color: #f9f9f9;
+  max-width: 600px;
+  margin: 100px auto 0; /* Add top margin to avoid overlap with fixed nav */
+  text-align: center;
+  background-color: #fff; /* Match the navigation bar background color */
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  font-family: 'Arial', sans-serif;
+  font-family: 'Avenir', Helvetica, Arial, sans-serif; /* Match the navigation bar font */
 }
 
 .login-form {
@@ -64,36 +88,42 @@ export default {
   flex-direction: column;
 }
 
-.login-input {
+.form-group {
   margin-bottom: 15px;
+}
+
+.form-control {
   padding: 10px;
   border: 1px solid #ccc;
-  border-radius: 6px;
+  border-radius: 4px; /* Match the navigation bar border radius */
   font-size: 16px;
   transition: border-color 0.3s;
+  font-family: 'Avenir', Helvetica, Arial, sans-serif; /* Match the navigation bar font */
+  color: #2c3e50; /* Match the navigation bar text color */
 }
 
-.login-input:focus {
-  border-color: #007bff;
+.form-control:focus {
+  border-color: #42b983; /* Match the navigation bar active color */
 }
 
-.login-input::placeholder {
+.form-control::placeholder {
   color: #999;
 }
 
-.login-button {
+.btn-primary {
   padding: 10px;
-  background-color: #007bff;
+  background-color: #42b983; /* Match the navigation bar button color */
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 4px; /* Match the navigation bar border radius */
   font-size: 16px;
   cursor: pointer;
   transition: background-color 0.3s;
+  font-weight: bold; /* Match the navigation bar font weight */
 }
 
-.login-button:hover {
-  background-color: #0056b3;
+.btn-primary:hover {
+  background-color: #36a472; /* Match the navigation bar hover color */
 }
 
 .error-message {
