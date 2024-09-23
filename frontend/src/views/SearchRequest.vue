@@ -86,7 +86,7 @@ export default {
 .search-container {
   padding: 20px;
   max-width: 600px;
-  margin: 0 auto;
+  margin: 100px auto 0; /* Add top margin to avoid overlap with fixed nav */
   text-align: center;
 }
 

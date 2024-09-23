@@ -5,7 +5,6 @@
       <router-link to="/About">About</router-link>
       <router-link to="/Search">Search</router-link>
       <!--  <router-link to="/Login">Login</router-link> -->
-      
     </div>
     
     <!-- This renders the current view based on the route -->
@@ -30,7 +29,7 @@ export default {
 .app {
   display: flex;                /* Use flexbox layout */
   flex-direction: column;       /* Stack children vertically */
-  min-height: 100vh;           /* Ensure the app takes at least the full viewport height */
+  min-height: 100vh;            /* Ensure the app takes at least the full viewport height */
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -39,9 +38,15 @@ export default {
 }
 
 .nav {
+  position: fixed;             /* Fix the navigation bar at the top */
+  top: 0;
+  width: 100%;
+  background-color: #fff;      /* Background color to match the design */
   padding: 30px;
   display: flex;               /* Use flexbox for alignment */
   justify-content: center;     /* Center items horizontally */
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Add a shadow for better visibility */
+  z-index: 1000;               /* Ensure it stays above other content */
 }
 
 .nav a {
@@ -57,7 +62,20 @@ export default {
   color: #42b983;
 }
 
+.content {
+  margin-top: 100px;           /* Add margin to avoid overlap with fixed nav */
+  flex: 1;
+  overflow-y: auto;
+}
+
 footer {
-  margin-top: auto; /* Push footer to the bottom */
+  position: fixed;             /* Fix the footer at the bottom */
+  bottom: 0;
+  width: 100%;
+  background-color: #f1f1f1;
+  text-align: center;
+  padding: 10px;
+  box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
+  z-index: 1000;               /* Ensure it stays above other content */
 }
 </style>
