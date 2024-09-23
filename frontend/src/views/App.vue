@@ -1,7 +1,7 @@
 <template>
   <div class="app">
     <div class="nav">
-      <img :src="logo" alt="Logo" class="logo" />
+      <img :src="logo" alt="Logo" class="logo" @click="goHome" />
       <router-link to="/">Home</router-link>
       <router-link to="/About">About</router-link>
       <router-link to="/Search">Search</router-link>
@@ -30,6 +30,9 @@ export default {
     };
   },
   methods: {
+    goHome() {
+      this.$router.push('/'); // Redirect to home page
+    },
     logout() {
       localStorage.removeItem('access_token');
       localStorage.removeItem('refresh_token');
@@ -67,6 +70,7 @@ export default {
 .logo {
   height: 40px;                /* Adjust the height as needed */
   margin-right: 20px;          /* Add some space between the logo and the links */
+  cursor: pointer;             /* Change cursor to pointer to indicate it's clickable */
 }
 
 .nav a, .logout-button {
