@@ -7,7 +7,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from .models import ITTeam, RequestService, UserRequest, ExpertiseArea
-from .serializers import ITTeamSerializer, ExpertiseAreaSerializer, RequestServiceSerializer, UserRequestSerializer
+from .serializers import ITTeamSerializer, ExpertiseAreaSerializer, RequestServiceSerializer, UserRequestSerializer, SignupSerializer
 
 # Search ITTeam by team_name and return associated expertise areas
 class SearchByITTeam(APIView):
@@ -64,15 +64,10 @@ class SearchView(APIView):
         # Return the results
         return JsonResponse(serializer.data, safe=False)
     
-    # Signup views
-    @api_view(['POST'])
-    def signup(request):
-        username = request.data['username']
-        password = request.data['password']
-        email = request.data.get('email', '')
-
-        if User.objects.filter(username=username).exists():
-            return Response({'error': 'Username already exists'}, status=status.HTTP_400_BAD_REQUEST)
-
-        user = User.objects.create_user(username=username, password=password, email=email)
-        return Response({'message': 'User created successfully'}, status=status.HTTP_201_CREATED)
+class SignupView(APIView):
+    def post(self, request, *args, **kwargs):
+        serializer = SignupSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()  # This will create the user
+            return Response({"message": "User created successfully."}, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

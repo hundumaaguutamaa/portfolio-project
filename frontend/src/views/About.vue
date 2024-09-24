@@ -1,7 +1,16 @@
 <template>
+   <div>
+      <nav class="navbar">
+        <button class="button is-primary add-team-button" @click="addTeam">Add Team</button>
+      </nav>
+      <div class="page-content">
+        </div>
+    </div>
   <div class="about-container">
     <!-- Button Section -->
-    <router-link to="/" class="home-button">Go to Home</router-link>
+    <!--<router-link to="/" class="home-button">Go to Home</router-link> -->
+    <button @click="AddTeamExperties" class="AddTeamExp">AddTeamExperties</button>
+
     
     <!-- Content Section -->
     <div class="content-section">
@@ -68,4 +77,20 @@ export default {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add subtle shadow */
   text-align: left; /* Align text to the left */
 }
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .add-team-button {
+    margin-top: 20px;
+    margin-left: auto;
+    /* New styles to position the button below the navigation */
+    position: absolute;
+    bottom: 20px; /* Adjust this value as needed */
+    left: 50%; /* Center horizontally */
+    transform: translateX(-50%);
+  }
 </style>

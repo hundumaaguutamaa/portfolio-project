@@ -16,8 +16,10 @@ router.register(r'userrequests', views.UserRequestViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    #path('api/', admin.site.urls),
     path('api/search/', views.SearchView.as_view()),
-    path('api/', include(router.urls)),  # Add your API routes
+    path('api/signup/', views.SignupView.as_view()),
+    #path('api/', include(router.urls)),  # Add your API routes
     path('', include(router.urls)),  # Redirect root to API
 
      # JWT login and refresh token endpoints

@@ -3,8 +3,10 @@
     <h1>Corporate IT Teams Expertise </h1>
     
     <!-- Add Logout button -->
+    
     <button @click="logout" class="logout-button">Logout</button>
-
+    
+    
     <!-- Flex container for teams list -->
     <div class="teams-container">
       <div class="team-card" v-for="team in teams" :key="team.team_id">

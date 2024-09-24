@@ -4,6 +4,8 @@ import About from '../views/About.vue';
 import Footer from '../views/Footer.vue';
 import SearchRequest from '../views/SearchRequest.vue';
 import Login from '../views/Login.vue';
+// import AddTe from '../views/AddTe.vue';
+import Signup from '../views/Signup.vue';
 
 // Define the routes with meta information for requiring authentication
 const routes = [
@@ -12,6 +14,7 @@ const routes = [
   { path: '/about', name: 'About', component: About, meta: { requiresAuth: true } },
   { path: '/Search', name: 'SearchRequest', component: SearchRequest, meta: { requiresAuth: true } },
   { path: '/Login', name: 'Login', component: Login },
+  { path: '/Signup', name: 'Signup', component: Signup },
 ];
 
 // Create and configure the router
