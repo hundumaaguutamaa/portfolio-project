@@ -32,6 +32,10 @@ class ITTeamViewSet(viewsets.ModelViewSet):
     queryset = ITTeam.objects.all()
     serializer_class = ITTeamSerializer
 
+class ExpertiseAreaViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = ExpertiseArea.objects.all()
+    serializer_class = ExpertiseAreaSerializer
+
 # CRUD operations for RequestService
 class RequestServiceViewSet(viewsets.ModelViewSet):
     queryset = RequestService.objects.all()

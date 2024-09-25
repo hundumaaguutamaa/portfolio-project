@@ -12,7 +12,21 @@ In the code, following functionalities are implemented using rest_framework:
 . Serializers to convert between Django models and JSON data.
 . ViewSets for handling CRUD operations on models.
 - pip install django-filter // for search functionality
+    Api Root
+The default basic root view for DefaultRouter
+
+    "teams": "http://127.0.0.1:8000/teams/",
+    "services": "http://127.0.0.1:8000/services/",
+    "userrequests": "http://127.0.0.1:8000/userrequests/"
 
 For frontend:
-- Vue-3 is the framework you use to build your application.
+-  user-friendly JavaScript framework widely used for developing modern web applications. 
 - Vite is a tool that helps you develop and build that application more efficiently.
+- Vite is a build tool designed for working with modern JavaScript frameworks. Specifically created for Vue.js projects
+  . https://vitejs.dev/
+ .  https://vuejs.org/
+
+ Usage: 
+ Backend http://127.0.0.1:8000/
+ Frontend http://localhost:5173/Login
+

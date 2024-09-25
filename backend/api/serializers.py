@@ -10,6 +10,7 @@ class ExpertiseAreaSerializer(serializers.ModelSerializer):
         fields = ['id', 'name']
 
 class ITTeamSerializer(serializers.ModelSerializer):
+    #expertise_areas = serializers.PrimaryKeyRelatedField(many=True, queryset=ExpertiseArea.objects.all())
     expertise_areas = ExpertiseAreaSerializer(many=True)  # Nested serializer
 
     class Meta:
