@@ -1,6 +1,15 @@
     Webstack - Portfolio Project
     Title: Dispatch Route
 
+Getting started:
+* Running the frontend,
+- cd frontend
+- npm run dev -- access the frontend http://localhost:5173
+
+* Run Backend
+-- cd backend
+-- python manage.py runserver -- access the backend http://127.0.0.1:8000/
+
 	Tools:
 Backend:
 - Django: Django restframework
