@@ -1,4 +1,5 @@
     Webstack - Portfolio Project
+  
     Title: Dispatch Route
 
 Getting started:
@@ -10,8 +11,9 @@ Getting started:
 -- cd backend
 -- python manage.py runserver -- access the backend http://127.0.0.1:8000/
 
-	Tools:
+        	Tools
 Backend:
+
 - Django: Django restframework
 rest_framework: a powerful and popular toolkit for building Web APIs with Django.
 		- It simplifies the process of creating serializers, views, and other components for handling API requests and 				responses.
@@ -29,13 +31,15 @@ The default basic root view for DefaultRouter
     "userrequests": "http://127.0.0.1:8000/userrequests/"
 
 For frontend:
+
 -  user-friendly JavaScript framework widely used for developing modern web applications. 
 - Vite is a tool that helps you develop and build that application more efficiently.
 - Vite is a build tool designed for working with modern JavaScript frameworks. Specifically created for Vue.js projects
   . https://vitejs.dev/
  .  https://vuejs.org/
 
- Usage: 
- Backend http://127.0.0.1:8000/
- Frontend http://localhost:5173/Login
+ Resources
 
+. https://www.djangoproject.com/
+. https://vitejs.dev/guide/
+. https://vuejs.org/guide/quick-start.html
