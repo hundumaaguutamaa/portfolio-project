@@ -23,7 +23,7 @@
 
     <!-- Placeholder for Results -->
     <div class="results-container" v-if="teams.length">
-      <h2>Search Results:</h2>
+      <h2>Team and experties</h2>
       <ul>
         <li v-for="team in teams" :key="team.team_id">
           <h3>{{ team.team_name }}</h3>
@@ -112,5 +112,10 @@ li {
 
 ul {
   padding: 0;
+}
+
+h2 {
+            font-weight: bold;
+            color: #4CAF50;
 }
 </style>
